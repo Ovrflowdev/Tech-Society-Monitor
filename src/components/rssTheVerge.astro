@@ -1,0 +1,46 @@
+---
+import { XMLParser } from "fast-xml-parser";
+
+const RSS = "https://www.theverge.com/rss/index.xml";
+
+const res = await fetch(RSS);
+const xml = await res.text();
+
+const parser = new XMLParser();
+const data = parser.parse(xml);
+
+const items = data.feed.entry.slice(0, 3);
+
+const articles = items.map((i) => {
+  let link = null;
+
+  if (Array.isArray(i.link)) {
+    link =
+      i.link.find((l) => l["@_href"])?.["@_href"] ||
+      i.link.find((l) => typeof l === "string");
+  } else if (typeof i.link === "string") {
+    link = i.link;
+  } else if (i.link?.["@_href"]) {
+    link = i.link["@_href"];
+  }
+
+  return {
+    title: i.title,
+    link,
+    description: i.summary || i.content,
+  };
+});
+---
+
+<h3>The Verge</h3>
+
+<ul>
+  {
+    articles.map((a) => (
+      <li>
+        <a href={a.link}>{a.title}</a>
+        <p>{a.description}</p>
+      </li>
+    ))
+  }
+</ul>
