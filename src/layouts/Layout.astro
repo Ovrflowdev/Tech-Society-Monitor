@@ -1,6 +1,6 @@
 ---
 const { page } = Astro.props;
-const title = "How tech influences society today";
+const title = "Tech & Society Monitor";
 ---
 
 <html>
@@ -13,5 +13,15 @@ const title = "How tech influences society today";
     <h1>{title} | {page}</h1>
     <slot />
     <!-- children content displayed here -->
+
+    <div class="footer">
+      <span> Made with ♥️ by Ovrflow.dev @ HackClub !</span>
+      <a href="mailto:potaaato.doodle894@passinbox.com">Email</a>
+      <a
+        href="https://github.com/Ovrflowdev/Tech-Society-Monitor/"
+        target="_blank"
+        rel="noopener noreferrer">GitHub Repo</a
+      >
+    </div>
   </body>
 </html>

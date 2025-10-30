@@ -1,7 +1,7 @@
 ---
 import { XMLParser } from "fast-xml-parser";
 
-const RSS = "https://techcrunch.com/feed/";
+const RSS = "https://krebsonsecurity.com/feed/";
 
 const res = await fetch(RSS);
 const xml = await res.text();
@@ -11,22 +11,24 @@ const data = parser.parse(xml);
 
 const items = data.rss.channel.item.slice(0, 3);
 
-const articles = items.map(i => ({
+const articles = items.map((i) => ({
   title: i.title,
   link: i.link,
-  description: i.description
+  description: i.description,
 }));
 
 console.log(articles);
 ---
 
-<h3>TechCrunch</h3>
+<h3>Krebs On Security</h3>
 
 <ul>
-  {articles.map(a => (
-    <li>
-      <a href={a.link}>{a.title}</a>
-      <p>{a.description}</p>
-    </li>
-  ))}
+  {
+    articles.map((a) => (
+      <li>
+        <a href={a.link}>{a.title}</a>
+        <p>{a.description}</p>
+      </li>
+    ))
+  }
 </ul>

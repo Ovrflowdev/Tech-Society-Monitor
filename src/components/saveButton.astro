@@ -1,0 +1,10 @@
+---
+
+---
+
+<script>
+  function getStoredData() {
+    const stored = localStorage.getItem("articlesData");
+    return stored ? JSON.parse(stored) : { read: [], saved: [] };
+  }
+</script>

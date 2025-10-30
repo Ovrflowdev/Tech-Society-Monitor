@@ -1,0 +1,59 @@
+---
+import { XMLParser } from "fast-xml-parser";
+
+const RSS = "https://www.schneier.com/feed/atom/";
+
+const res = await fetch(RSS);
+const xml = await res.text();
+
+const parser = new XMLParser({
+  ignoreAttributes: false,
+  attributeNamePrefix: "@_",
+});
+const data = parser.parse(xml);
+
+const items = data.feed.entry.slice(0, 3);
+
+function cleanText(html) {
+  if (!html) return "";
+  return html
+    .replace(/<[^>]+>/g, "")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
+    .replace(/&#8217;/g, "'")
+    .replace(/&#8220;/g, '"')
+    .replace(/&#8221;/g, '"')
+    .replace(/&#8212;/g, "—")
+    .trim();
+}
+
+const articles = items.map((i) => {
+  const titleContent = i.title["#text"] || i.title;
+  const summaryContent = i.summary["#text"] || i.summary;
+  const linkObj = Array.isArray(i.link)
+    ? i.link.find((l) => l["@_rel"] === "alternate")
+    : i.link;
+
+  return {
+    title: cleanText(titleContent),
+    link: linkObj?.["@_href"] || linkObj,
+    description: cleanText(summaryContent),
+  };
+});
+
+console.log(articles);
+---
+
+<h3>Schneier on Security</h3>
+
+<ul>
+  {
+    articles.map((a) => (
+      <li>
+        <a href={a.link}>{a.title}</a>
+        <p>{a.description}</p>
+      </li>
+    ))
+  }
+</ul>
