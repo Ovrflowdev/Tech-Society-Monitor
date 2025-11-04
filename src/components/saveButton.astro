@@ -1,10 +1,57 @@
 ---
+interface Props {
+  link: string;
+  title: string;
+}
 
+const { link, title } = Astro.props;
 ---
 
+<button class="save-btn" data-link={link} data-title={title}>💾 Save</button>
+
 <script>
-  function getStoredData() {
-    const stored = localStorage.getItem("articlesData");
-    return stored ? JSON.parse(stored) : { read: [], saved: [] };
+  function getSavedArticles() {
+    const stored = localStorage.getItem("savedArticles");
+    return stored ? JSON.parse(stored) : [];
   }
+
+  function saveArticle(link, title) {
+    const saved = getSavedArticles();
+
+    const alreadySaved = saved.some((article) => article.link === link);
+
+    if (!alreadySaved) {
+      saved.push({
+        link: link,
+        title: title,
+        savedAt: new Date().toISOString(),
+      });
+      localStorage.setItem("savedArticles", JSON.stringify(saved));
+      return true;
+    }
+
+    return false;
+  }
+
+  document.querySelectorAll(".save-btn").forEach((btn) => {
+    const link = btn.dataset.link;
+    const title = btn.dataset.title;
+
+    const saved = getSavedArticles();
+    const isAlreadySaved = saved.some((article) => article.link === link);
+
+    if (isAlreadySaved) {
+      btn.textContent = "✅ Saved";
+      btn.disabled = true;
+    }
+
+    btn.addEventListener("click", () => {
+      const success = saveArticle(link, title);
+
+      if (success) {
+        btn.textContent = "✅ Saved";
+        btn.disabled = true;
+      }
+    });
+  });
 </script>

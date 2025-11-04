@@ -65,7 +65,7 @@ h1 {
 }
 
 .feeds li {
-    margin: 5px;
+    margin: 10px;
 }
 
 .feeds li:hover {
@@ -77,25 +77,65 @@ h1 {
     color: var(--bg-color);
 }
 
-title {
-    visibility: hidden;
-}
-
 .footer {
     padding: 1%;
     display: flex;
     border-top: 1px solid var(--accent-color);
     align-items: center;
     flex-direction: row;
-    gap: 10px;
+    justify-content: center;
+    gap: 20px;
 }
 
 .footer a:hover {
     background-color: var(--accent-color);
     color: var(--bg-color);
+
 }
 
 .footer :nth-child(-n+2) {
     border-right: var(--accent-color) solid 2px;
-    padding-right: 10px;
+    padding-right: 20px;
+}
+
+.save-btn {
+    padding: 0.5rem 1rem;
+    position: relative;
+    justify-self: right;
+    width: 10%;
+    cursor: pointer;
+    border: none;
+    background-color: #e6edf3;
+    color: var(--bg-color)
+}
+
+.save-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.tag {
+    border-radius: 100%;
+    width: 5%;
+    border-color: 1px var(--accent-color) solid;
+    color: var(--accent-color);
+}
+
+/*
+ ██████╗███████╗███████╗     ██████╗██████╗ ██╗███╗   ███╗███████╗███████╗       ██╗ 
+██╔════╝██╔════╝██╔════╝    ██╔════╝██╔══██╗██║████╗ ████║██╔════╝██╔════╝    ██╗╚██╗
+██║     ███████╗███████╗    ██║     ██████╔╝██║██╔████╔██║█████╗  ███████╗    ╚═╝ ██║
+██║     ╚════██║╚════██║    ██║     ██╔══██╗██║██║╚██╔╝██║██╔══╝  ╚════██║    ██╗ ██║
+╚██████╗███████║███████║    ╚██████╗██║  ██║██║██║ ╚═╝ ██║███████╗███████║    ╚═╝██╔╝
+ ╚═════╝╚══════╝╚══════╝     ╚═════╝╚═╝  ╚═╝╚═╝╚═╝     ╚═╝╚══════╝╚══════╝       ╚═╝ 
+*/
+/* But I don't mind ! */
+title {
+    content-visibility: hidden;
+}
+script {
+    content-visibility: hidden;
+}
+style {
+    content-visibility: hidden;
 }
